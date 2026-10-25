@@ -35,7 +35,7 @@ export const PROJECTS = [
       "Allocation changes over time",
     ],
     tech: [], // add your stack, e.g. ["React", "Vite", "Charts"]
-    link: "https://dulcet-phoenix-32f7f5.netlify.app/",
+    link: "https://maadalla.netlify.app/",
     repo: "",
     images: [],
     videos: [],

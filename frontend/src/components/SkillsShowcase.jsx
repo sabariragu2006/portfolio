@@ -2,7 +2,7 @@ import { useState } from "react";
 
 // Which technologies each project uses. Add Maadala and Baby Tech once you know their stack.
 const PROJECT_TECH = {
-  Adhigarachi: ["C#", "WPF", "SQLite", "React"],
+  "Vidhagam":["WPF", "SQLite", "React"],
   "KMV Grand Inn": ["C#", "WPF", "SQLite"],
   "Sairam Sweets": ["C#", "WPF", "QuestPDF", "SkiaSharp"],
   "RS Infotech": ["React", "Bootstrap", "Netlify"],

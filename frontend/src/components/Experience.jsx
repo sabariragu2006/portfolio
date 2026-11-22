@@ -50,7 +50,7 @@ export const EXPERIENCES = [
     end: "Sep 2026",
     current: false,
     duration: "4 months",
-    logo: "/rs-infotech.png",
+    logo: "/rs-infotech.jpeg",
     initials: "RS",
     summary:
       "Designed, built and launched the company website for a security services business, and handled the local search presence that helps nearby customers find them.",

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import ProjectsShowcase from "./ProjectsShowcase.jsx";
 import SkillsShowcase from "./SkillsShowcase.jsx";
+import Experience, { EXPERIENCES, CompanyLogo } from "./Experience.jsx";
 
 const EMAIL = "sabariragu2006@email.com";
 const GITHUB = "https://github.com/sabariragu2006";
@@ -12,8 +13,8 @@ const NAV_LINKS = [
   { label: "Home", href: "#home" },
   { label: "Skills", href: "#/skills" },
   { label: "Projects", href: "#/projects" },
+  { label: "Experience", href: "#/experience" },
   { label: "Achievements", href: "#achievements" },
-  { label: "Resume", href: "#resume" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -117,7 +118,7 @@ function useTyping(words, speed = 70, pause = 1400) {
 
   return text;
 }
-const PAGES = { "#/projects": "projects", "#/skills": "skills" };
+const PAGES = { "#/projects": "projects", "#/skills": "skills", "#/experience": "experience" };
 
 const getPage = () => PAGES[window.location.hash] || "home";
 
@@ -470,6 +471,55 @@ function Projects() {
   );
 }
 
+function ExperiencePreview() {
+  return (
+    <section id="experience" className="pf-section pf-section--alt">
+      <div className="container">
+        <SectionHead num="05" eyebrow="EXPERIENCE" title="Where I've worked" />
+        <div className="row g-4">
+          {EXPERIENCES.map((e, i) => (
+            <div className="col-lg-6 pf-reveal" style={{ "--d": `${i * 0.1}s` }} key={e.id}>
+              <article className="pf-card pf-exp-card h-100">
+                <div className="pf-exp-top">
+                  <CompanyLogo src={e.logo} name={e.company} initials={e.initials} />
+                  <div className="pf-exp-id">
+                    <h3 className="pf-h3">{e.role}</h3>
+                    <span className="pf-exp-company">{e.company}</span>
+                  </div>
+                </div>
+
+                <div className="pf-exp-period">
+                  <span>
+                    {e.start} – {e.end}
+                  </span>
+                  {e.current && (
+                    <span className="pf-exp-now">
+                      <i aria-hidden="true" /> Current
+                    </span>
+                  )}
+                </div>
+
+                <p className="pf-muted">{e.summary}</p>
+
+                <ul className="pf-chips">
+                  {e.tech.slice(0, 5).map((t) => (
+                    <li key={t}>{t}</li>
+                  ))}
+                </ul>
+              </article>
+            </div>
+          ))}
+        </div>
+        <div className="pf-reveal mt-5">
+          <a href="#/experience" className="pf-btn pf-btn--ghost">
+            View full experience
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Achievements() {
   const n = ACHIEVEMENTS.length;
   const [front, setFront] = useState(1); // middle card starts in front
@@ -497,7 +547,7 @@ function Achievements() {
   return (
     <section id="achievements" className="pf-section">
       <div className="container">
-        <SectionHead num="05" eyebrow="ACHIEVEMENTS" title="Milestones so far" />
+        <SectionHead num="06" eyebrow="ACHIEVEMENTS" title="Milestones so far" />
 
         <div className="pf-ach-stage pf-reveal" onKeyDown={onKeyDown}>
           {ACHIEVEMENTS.map((a, i) => {
@@ -561,7 +611,7 @@ function Resume() {
   return (
     <section id="resume" className="pf-section pf-section--alt">
       <div className="container">
-        <SectionHead num="06" eyebrow="RESUME" title="Download my resume" />
+        <SectionHead num="07" eyebrow="RESUME" title="Download my resume" />
         <div className="row g-5 align-items-center">
           <div className="col-lg-6 pf-reveal">
             <p className="pf-text">
@@ -634,7 +684,7 @@ function Contact() {
   return (
     <section id="contact" className="pf-section">
       <div className="container">
-        <SectionHead num="07" eyebrow="CONTACT" title="Let's build something" />
+        <SectionHead num="08" eyebrow="CONTACT" title="Let's build something" />
         <p className="pf-text pf-reveal" style={{ maxWidth: "36rem" }}>
           Have a project in mind or want to collaborate? Reach out through any
           of the channels below and I'll get back to you.
@@ -683,7 +733,7 @@ export default function Home() {
 
   // Scroll position after switching pages
   useEffect(() => {
-    if (page === "projects") {
+    if (page === "projects" || page === "experience") {
       window.scrollTo({ top: 0, behavior: "instant" });
       return;
     }
@@ -801,7 +851,7 @@ export default function Home() {
             transition: max-height 0.35s ease, opacity 0.25s ease, visibility 0s linear 0.35s;
           }
           .pf-panel.is-open {
-            max-height: 420px; visibility: visible; opacity: 1;
+            max-height: 520px; visibility: visible; opacity: 1;
             transition: max-height 0.35s ease, opacity 0.25s ease, visibility 0s;
           }
           .pf-links { padding: 0.5rem 0 1rem; gap: 0; }
@@ -960,6 +1010,40 @@ export default function Home() {
           border: 1px solid var(--pf-border); color: var(--pf-text);
           background: rgba(255, 255, 255, 0.02);
         }
+
+        /* ---------- Company logo slot (shared with Experience.jsx) ---------- */
+        .pf-logo {
+          display: flex; align-items: center; justify-content: center; flex: none;
+          width: 64px; height: 64px; border-radius: 14px; overflow: hidden;
+          border: 1px solid var(--pf-border); background: rgba(255, 255, 255, 0.05);
+        }
+        .pf-logo--lg { width: 84px; height: 84px; border-radius: 18px; }
+        .pf-logo img { display: block; width: 100%; height: 100%; object-fit: contain; padding: 8px; user-select: none; }
+        .pf-logo-fallback {
+          display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;
+          font-weight: 800; font-size: 1.1rem; letter-spacing: 0.06em; color: var(--pf-accent);
+          background:
+            radial-gradient(ellipse at 20% 0%, rgba(193, 18, 31, 0.28), transparent 70%),
+            linear-gradient(rgba(212, 175, 55, 0.06) 1px, transparent 1px) 0 0 / 100% 14px;
+        }
+        .pf-logo--lg .pf-logo-fallback { font-size: 1.4rem; }
+
+        /* ---------- Experience preview ---------- */
+        .pf-exp-card { display: flex; flex-direction: column; }
+        .pf-exp-top { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.1rem; }
+        .pf-exp-id .pf-h3 { margin-bottom: 0.15rem; }
+        .pf-exp-company { color: var(--pf-accent); font-weight: 600; font-size: 0.92rem; }
+        .pf-exp-period {
+          display: flex; flex-wrap: wrap; align-items: center; gap: 0.7rem; margin-bottom: 0.9rem;
+          font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.8;
+        }
+        .pf-exp-now {
+          display: inline-flex; align-items: center; gap: 0.45rem; font-size: 0.68rem; font-weight: 600;
+          letter-spacing: 0.12em; padding: 0.18rem 0.6rem; border-radius: 999px;
+          border: 1px solid var(--pf-border); color: var(--pf-text);
+        }
+        .pf-exp-now i { width: 6px; height: 6px; border-radius: 50%; background: #2ecc71; }
+        .pf-exp-card .pf-chips { margin-top: auto; padding-top: 1.1rem; }
 
         /* ---------- Skills ---------- */
         .pf-skill-card { display: flex; flex-direction: column; }
@@ -1169,6 +1253,7 @@ export default function Home() {
           <Hero />
           <About />
           <Services />
+          <ExperiencePreview />
           <Achievements />
           <Resume />
           <Contact />
@@ -1176,6 +1261,7 @@ export default function Home() {
       )}
       {page === "projects" && <ProjectsShowcase />}
       {page === "skills" && <SkillsShowcase />}
+      {page === "experience" && <Experience />}
 
     <footer className="pf-footer">
   <div className="container">

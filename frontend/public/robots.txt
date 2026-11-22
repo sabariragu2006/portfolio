@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sabariragu2006.netlify.app/sitemap.xml
